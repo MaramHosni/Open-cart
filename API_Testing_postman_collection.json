@@ -1,0 +1,212 @@
+{
+  "info": {
+    "name": "OpenCart Full API Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "opencart-api-testing-advanced"
+  },
+  "item": [
+    {
+      "name": "Homepage",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://demo.opencart.com/",
+          "protocol": "https",
+          "host": [
+            "demo",
+            "opencart",
+            "com"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response time is less than 1000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Desktops Category",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://demo.opencart.com/index.php?route=product/category&path=20",
+          "protocol": "https",
+          "host": [
+            "demo",
+            "opencart",
+            "com"
+          ],
+          "path": [
+            "index.php"
+          ],
+          "query": [
+            {
+              "key": "route",
+              "value": "product/category"
+            },
+            {
+              "key": "path",
+              "value": "20"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Category page loaded\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.text()).to.include(\"Desktops\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search Product - mac",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://demo.opencart.com/index.php?route=product/search&search=mac",
+          "protocol": "https",
+          "host": [
+            "demo",
+            "opencart",
+            "com"
+          ],
+          "path": [
+            "index.php"
+          ],
+          "query": [
+            {
+              "key": "route",
+              "value": "product/search"
+            },
+            {
+              "key": "search",
+              "value": "mac"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Search works\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.text().toLowerCase()).to.include(\"macbook\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Contact Page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://demo.opencart.com/index.php?route=information/contact",
+          "protocol": "https",
+          "host": [
+            "demo",
+            "opencart",
+            "com"
+          ],
+          "path": [
+            "index.php"
+          ],
+          "query": [
+            {
+              "key": "route",
+              "value": "information/contact"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Contact page loaded\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.text().toLowerCase()).to.include(\"contact us\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search Product - Invalid Term",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://demo.opencart.com/index.php?route=product/search&search=xyz123",
+          "protocol": "https",
+          "host": [
+            "demo",
+            "opencart",
+            "com"
+          ],
+          "path": [
+            "index.php"
+          ],
+          "query": [
+            {
+              "key": "route",
+              "value": "product/search"
+            },
+            {
+              "key": "search",
+              "value": "xyz123"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Invalid search shows no results\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.text().toLowerCase()).to.include(\"no product\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}
